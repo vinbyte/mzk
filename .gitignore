@@ -1,1 +1,4 @@
 .env
+dbdata
+
+.DS_Store

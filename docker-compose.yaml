@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  app:
+    container_name: mzk
+    build: .
+    env_file:
+      - .env.docker
+    ports:
+      - 6060:6060
+    restart: on-failure
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: db
+    environment:
+      - POSTGRES_PASSWORD=mzk123
+      - PGUSER=mzk
+      - POSTGRES_DB=mzk_db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./dbdata/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready -h postgres"
+      interval: 10s
+      timeout: 30s
+      retries: 3
