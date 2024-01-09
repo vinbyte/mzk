@@ -1,5 +1,17 @@
 include .env
 
+generate:
+	go generate ./...
+
+dev: generate
+	go run .
+
+compose-up:
+	@docker-compose up
+
+compose-down:
+	@docker-compose down
+
 DB_HOST=$(DATABASE.HOST)
 # due to we run a migration via docker container, we need to change the localhost to host.docker.internal to connect to database in local
 # ref : https://docs.docker.com/desktop/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host

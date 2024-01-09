@@ -20,7 +20,7 @@ services:
       - PGUSER=mzk
       - POSTGRES_DB=mzk_db
     ports:
-      - 5432:5432
+      - 5433:5433
     volumes:
       - ./dbdata/postgres:/var/lib/postgresql/data
     healthcheck:

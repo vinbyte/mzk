@@ -1,4 +1,6 @@
 .env
 dbdata
+docs
+wire_gen.go
 
 .DS_Store
