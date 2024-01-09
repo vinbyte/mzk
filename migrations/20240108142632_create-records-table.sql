@@ -6,8 +6,13 @@ CREATE TABLE IF NOT EXISTS records (
     created_at timestamptz NOT NULL DEFAULT current_timestamp,
     PRIMARY KEY (id)
 );
-INSERT INTO records (name, marks) VALUES ('Gavinda', ARRAY[100, 300, 400]);
-INSERT INTO records (name, marks) VALUES ('Kinandana', ARRAY[200, 300, 500]);
+-- seed table
+INSERT INTO records (name, marks) VALUES ('Gavinda', ARRAY[100, 100]);
+INSERT INTO records (name, marks) VALUES ('Kinandana', ARRAY[50, 100]);
+INSERT INTO records (name, marks) VALUES ('Gavinda Kinandana', ARRAY[100, 200, 300]);
+-- add index to speed up query
+CREATE INDEX records_marks_idx ON records (marks,created_at);
 
 -- migrate:down
+DROP INDEX records_marks_idx;
 DROP TABLE IF EXISTS records;
