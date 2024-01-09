@@ -85,7 +85,7 @@ func (h *HTTP) setupSwaggerDocs() {
 
 func (h *HTTP) setupRoutes() {
 	h.mux.Get("/health", h.HealthCheck)
-	// h.Router.SetupRoutes(h.mux)
+	h.Router.SetupRoutes(h.mux)
 }
 
 func (h *HTTP) setupGracefulShutdown() {

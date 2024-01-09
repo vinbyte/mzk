@@ -4,18 +4,36 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/vinbyte/mzk/shared/failure"
 	"github.com/vinbyte/mzk/shared/logger"
 )
 
 // Base is the base object of all responses
 type Base struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int         `json:"code"`
+	Msg     string      `json:"msg"`
+	Records interface{} `json:"records"`
 }
 
 // WithMessage sends a response with a simple text message
 func WithMessage(w http.ResponseWriter, code int, message string) {
 	respond(w, code, Base{Msg: message})
+}
+
+// WithJSON sends a response containing a JSON object
+func WithJSON(w http.ResponseWriter, code int, data interface{}) {
+	respond(w, code, Base{
+		Code:    code,
+		Msg:     "success",
+		Records: data,
+	})
+}
+
+// WithError sends a response with an error message
+func WithError(w http.ResponseWriter, err error) {
+	code := failure.GetCode(err)
+	errMsg := err.Error()
+	respond(w, code, Base{Code: code, Msg: errMsg})
 }
 
 // WithPreparingShutdown sends a default response for when the server is preparing to shut down
