@@ -1,4 +1,4 @@
-# Prerequsites
+# Prerequisites
 - Golang installed
 - Postgres installed
 - [DBMate](https://github.com/amacneil/dbmate) installed. Or you can use dbmate via docker instead (using `make` command)
