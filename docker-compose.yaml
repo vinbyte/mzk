@@ -19,8 +19,9 @@ services:
       - POSTGRES_PASSWORD=mzk123
       - PGUSER=mzk
       - POSTGRES_DB=mzk_db
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
-      - 5433:5433
+      - 5433:5432
     volumes:
       - ./dbdata/postgres:/var/lib/postgresql/data
     healthcheck:
@@ -28,3 +29,13 @@ services:
       interval: 10s
       timeout: 30s
       retries: 3
+  
+  migration:
+    image: ghcr.io/amacneil/dbmate
+    container_name: dbmate
+    entrypoint: dbmate -u 'postgres://mzk:mzk123@postgres:5432/mzk_db?sslmode=disable' up
+    volumes:
+      - ./migrations:/db/migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
