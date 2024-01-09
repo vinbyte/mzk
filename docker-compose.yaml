@@ -3,8 +3,6 @@ services:
   app:
     container_name: mzk
     build: .
-    env_file:
-      - .env.docker
     ports:
       - 6060:6060
     restart: on-failure
@@ -18,12 +16,13 @@ services:
     environment:
       - POSTGRES_PASSWORD=mzk123
       - PGUSER=mzk
+      - POSTGRES_USER=mzk
       - POSTGRES_DB=mzk_db
-      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - 5433:5432
     volumes:
       - ./dbdata/postgres:/var/lib/postgresql/data
+    restart: always
     healthcheck:
       test: "pg_isready -h postgres"
       interval: 10s
