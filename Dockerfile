@@ -2,6 +2,7 @@
 FROM golang:alpine as builder
 WORKDIR /home
 COPY . .
+RUN go generate ./...
 RUN go build -o app
 
 #final image
